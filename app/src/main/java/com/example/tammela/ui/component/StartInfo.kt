@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,8 +48,7 @@ fun TempTile(title: String, value: Double, modifier: Modifier = Modifier) {
             Text(
                 style = MaterialTheme.typography.headlineLarge,
                 fontWeight = FontWeight(700),
-                text =String.format("%.2f", value),
-                //text = value.toString().format("%.2f")
+                text = String.format("%.2f", value),
             )
             Text(
                 style = MaterialTheme.typography.headlineSmall,
@@ -78,11 +78,17 @@ fun StartInfo(
 
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
-            indoorSensor?.let {
-                TempTile(title = "Sisällä", value = it.temperature)
-            }
-            outdoorSensor?.let {
-                TempTile(title = "Ulkona", value = it.temperature)
+            if (indoorSensor != null && outdoorSensor != null) {
+                /*indoorSensor.let {
+                    TempTile(title = "Sisällä", value = it.temperature)
+                }
+                outdoorSensor.let {
+                    TempTile(title = "Ulkona", value = it.temperature)
+                }*/
+                TempTile(title = "Sisällä", value = indoorSensor.temperature)
+                TempTile(title = "Ulkona", value = outdoorSensor.temperature)
+            } else {
+                CircularProgressIndicator()
             }
         }
         Column (modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -126,11 +132,12 @@ fun StartInfo(
                     }
 
                 } else {
-                    Text(
+                    CircularProgressIndicator()
+                    /*Text(
                         text = "No history available",
                         style = MaterialTheme.typography.bodyLarge,
                         modifier = Modifier.padding(top = 8.dp)
-                    )
+                    )*/
                 }
             }
 
