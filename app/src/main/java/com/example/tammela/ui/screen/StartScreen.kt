@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Air
 import androidx.compose.material.icons.outlined.CastConnected
-import androidx.compose.material.icons.outlined.DeviceThermostat
 import androidx.compose.material.icons.outlined.NoteAlt
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Speed
@@ -27,7 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.ui.component.StartInfo
-import com.example.tammela.ui.component.TemperatureTile
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
 

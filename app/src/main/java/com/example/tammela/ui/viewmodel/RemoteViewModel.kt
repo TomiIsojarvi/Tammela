@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.RemoteHistory
 import com.example.tammela.data.model.RemoteStatus
-import com.example.tammela.data.model.Sensor
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.result.Result
 import kotlinx.coroutines.Dispatchers

@@ -1,8 +1,6 @@
 package com.example.tammela.ui.component
 
-import android.health.connect.datatypes.units.Temperature
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,24 +21,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.tammela.data.model.RemoteHistory
 import com.example.tammela.data.model.RemoteStatus
-import com.example.tammela.ui.screen.ButtonRow
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
-import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
-import kotlinx.datetime.LocalTime
 import kotlinx.datetime.format
-import kotlinx.datetime.format.MonthNames
 import kotlinx.datetime.format.byUnicodePattern
-import kotlinx.datetime.format.char
 
 @Composable
 fun TempTile(title: String, value: Double, modifier: Modifier = Modifier) {

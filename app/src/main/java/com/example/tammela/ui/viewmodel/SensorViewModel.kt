@@ -1,8 +1,5 @@
 package com.example.tammela.ui.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.Sensor
