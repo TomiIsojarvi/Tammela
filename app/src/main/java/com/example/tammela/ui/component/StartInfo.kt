@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -81,7 +82,10 @@ fun StartInfo(
                       },
             modifier = Modifier
                 .align(alignment = Alignment.End)
-                .padding(10.dp))
+                .padding(10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Gray.copy(alpha = 0.2f),
+                contentColor = Color.Black))
         {
             Icon(
                 imageVector = Icons.Filled.Refresh,

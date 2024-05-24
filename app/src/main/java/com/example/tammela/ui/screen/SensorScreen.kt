@@ -16,6 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.ui.component.SensorCardList
@@ -36,7 +37,11 @@ fun SensorScreen(
                 onClick = { viewModel.refreshSensorData() },
                 modifier = Modifier
                     .align(alignment = Alignment.End)
-                    .padding(10.dp))
+                    .padding(10.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Gray.copy(alpha = 0.2f),
+                    contentColor = Color.Black)
+                )
             {
                 Icon(
                     imageVector = Icons.Filled.Refresh,
