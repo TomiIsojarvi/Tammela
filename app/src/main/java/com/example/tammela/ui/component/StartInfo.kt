@@ -79,6 +79,7 @@ fun StartInfo(
         Button(
             onClick = {
                 sensorViewModel.refreshSensorData()
+                remoteViewModel.refresRemoteData()
                       },
             modifier = Modifier
                 .align(alignment = Alignment.End)

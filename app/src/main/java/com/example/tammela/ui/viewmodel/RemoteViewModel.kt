@@ -44,7 +44,7 @@ class RemoteViewModel : ViewModel() {
         }
     }
 
-    fun refreshSensorData() {
+    fun refresRemoteData() {
         viewModelScope.launch {
             getRemote()
         }
