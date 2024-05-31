@@ -11,12 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class SensorViewModel: ViewModel() {
-    /*val _sensors: MutableState<ArrayList<Sensor>> = mutableStateOf(ArrayList())
-    val sensors: MutableState<ArrayList<Sensor>> = _sensors*/
-
-    /*val _error: MutableState<String?> = mutableStateOf(null)
-    val error: State<String?> = _error*/
-
     private val _sensors = MutableStateFlow<List<Sensor>>(emptyList())
     val sensors: StateFlow<List<Sensor>> = _sensors
 

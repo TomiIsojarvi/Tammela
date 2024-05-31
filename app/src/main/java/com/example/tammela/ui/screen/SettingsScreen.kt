@@ -23,7 +23,12 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,10 +38,16 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tammela.data.model.RemoteStatus
+import com.example.tammela.data.model.UserAuth
+import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SettingsViewModel
+import com.example.tammela.ui.viewmodel.UserAuthViewModel
 import kotlinx.coroutines.launch
 
 val Context.dataStore by preferencesDataStore(name = "settings")
+
+// https://medium.com/androiddevelopers/effective-state-management-for-textfield-in-compose-d6e5b070fbe5
 
 @Composable
 fun TrailingIconButton(
@@ -57,14 +68,15 @@ fun TrailingIconButton(
 @Composable
 fun SettingsScreen(
     context: Context,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
-    val viewModel: SettingsViewModel = viewModel()
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val userAuthViewModel: UserAuthViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
 
     // Load initial data when the composable is first composed
     LaunchedEffect(Unit) {
-        viewModel.loadUserData(context)
+        settingsViewModel.loadUserData(context)
     }
 
     Column(
@@ -86,22 +98,22 @@ fun SettingsScreen(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
-            value = viewModel.username,
-            onValueChange = { viewModel.updateUsername(it) },
+            value = settingsViewModel.username,
+            onValueChange = { settingsViewModel.updateUsername(it) },
             label = { Text("Käyttäjätunnus") },
             singleLine = true,
             trailingIcon = {
-                if (viewModel.username.isNotBlank()) {
+                if (settingsViewModel.username.isNotBlank()) {
                     TrailingIconButton(
                         icon = Icons.Default.Clear,
                         contentDescription = "Anna käyttäjätunnus",
                         tint = Color.Black,
-                        onClick = { viewModel.updateUsername("") }
+                        onClick = { settingsViewModel.updateUsername("") }
                     )
                 }
             },
             supportingText = {
-                if (viewModel.username.isEmpty()) {
+                if (settingsViewModel.username.isEmpty()) {
                     Text(
                         text = "Syötä käyttäjätunnus",
                         color = Color.Red,
@@ -123,23 +135,23 @@ fun SettingsScreen(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
-            value = viewModel.remoteNumber,
-            onValueChange = { viewModel.updateRemoteNumber(it) },
+            value = settingsViewModel.remoteNumber,
+            onValueChange = { settingsViewModel.updateRemoteNumber(it) },
             label = { Text("Etäohjauksen GSM-numero") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             trailingIcon = {
-                if (viewModel.remoteNumber.isNotBlank()) {
+                if (settingsViewModel.remoteNumber.isNotBlank()) {
                     TrailingIconButton(
                         icon = Icons.Default.Clear,
                         contentDescription = "Anna etäohjauksen GSM-numero",
                         tint = Color.Black,
-                        onClick = { viewModel.updateRemoteNumber("") }
+                        onClick = { settingsViewModel.updateRemoteNumber("") }
                     )
                 }
             },
             supportingText = {
-                if (viewModel.remoteNumber.isEmpty()) {
+                if (settingsViewModel.remoteNumber.isEmpty()) {
                     Text(
                         text = "Syötä GSM-numero",
                         color = Color.Red
@@ -155,23 +167,23 @@ fun SettingsScreen(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
             ),
-            value = viewModel.heatPumpNumber,
-            onValueChange = { viewModel.updateHeatPumpNumber(it) },
+            value = settingsViewModel.heatPumpNumber,
+            onValueChange = { settingsViewModel.updateHeatPumpNumber(it) },
             label = { Text("Ilmalämpöpumpun GSM-numero") },
             singleLine = true,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             trailingIcon = {
-                if (viewModel.heatPumpNumber.isNotBlank()) {
+                if (settingsViewModel.heatPumpNumber.isNotBlank()) {
                     TrailingIconButton(
                         icon = Icons.Default.Clear,
                         contentDescription = "Anna ilmalämpöpumpun GSM-numero",
                         tint = Color.Black,
-                        onClick = { viewModel.updateHeatPumpNumber("") }
+                        onClick = { settingsViewModel.updateHeatPumpNumber("") }
                     )
                 }
             },
             supportingText = {
-                if (viewModel.heatPumpNumber.isEmpty()) {
+                if (settingsViewModel.heatPumpNumber.isEmpty()) {
                     Text(
                         text = "Syötä GSM-numero",
                         color = Color.Red
@@ -184,9 +196,9 @@ fun SettingsScreen(
             modifier = modifier.padding(10.dp),
             onClick = {
                 coroutineScope.launch {
-                    viewModel.saveUserName(context)
-                    viewModel.saveRemoteNumber(context)
-                    viewModel.saveHeatPumpNumber(context)
+                    settingsViewModel.saveUserName(context)
+                    settingsViewModel.saveRemoteNumber(context)
+                    settingsViewModel.saveHeatPumpNumber(context)
                 }
             }
         ) {
