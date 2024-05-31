@@ -98,12 +98,6 @@ fun StartInfo(
         }
         Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             if (indoorSensor != null && outdoorSensor != null) {
-                /*indoorSensor.let {
-                    TempTile(title = "Sisällä", value = it.temperature)
-                }
-                outdoorSensor.let {
-                    TempTile(title = "Ulkona", value = it.temperature)
-                }*/
                 TempTile(title = "Sisällä", value = indoorSensor.temperature)
                 TempTile(title = "Ulkona", value = outdoorSensor.temperature)
             } else {
@@ -152,11 +146,6 @@ fun StartInfo(
 
                 } else {
                     CircularProgressIndicator()
-                    /*Text(
-                        text = "No history available",
-                        style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )*/
                 }
             }
 
