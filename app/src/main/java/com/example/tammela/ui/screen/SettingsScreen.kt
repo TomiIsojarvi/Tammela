@@ -1,19 +1,26 @@
 package com.example.tammela.ui.screen
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Download
+import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +38,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
@@ -46,8 +55,6 @@ import com.example.tammela.ui.viewmodel.UserAuthViewModel
 import kotlinx.coroutines.launch
 
 val Context.dataStore by preferencesDataStore(name = "settings")
-
-// https://medium.com/androiddevelopers/effective-state-management-for-textfield-in-compose-d6e5b070fbe5
 
 @Composable
 fun TrailingIconButton(
@@ -194,14 +201,24 @@ fun SettingsScreen(
         Button(
             enabled = true,
             modifier = modifier.padding(10.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Gray.copy(alpha = 0.2f),
+                contentColor = Color.Black),
             onClick = {
                 coroutineScope.launch {
                     settingsViewModel.saveUserName(context)
                     settingsViewModel.saveRemoteNumber(context)
                     settingsViewModel.saveHeatPumpNumber(context)
                 }
+                Toast.makeText(context, "Tallennettu", Toast.LENGTH_SHORT).show()
             }
         ) {
+            Icon(
+                imageVector = Icons.Filled.Download,
+                contentDescription = "Save",
+                modifier = Modifier.size(ButtonDefaults.IconSize)
+            )
+            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
             Text("Tallenna")
         }
     }

@@ -19,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.tammela.ui.screen.HeatPumpScreen
+import com.example.tammela.ui.screen.RemoteScreen
 import com.example.tammela.ui.screen.SensorScreen
 import com.example.tammela.ui.screen.SettingsScreen
 import com.example.tammela.ui.screen.StartScreen
@@ -99,6 +101,7 @@ fun TammelaApp(
                     onHeatPumpClicked = {navController.navigate(AppScreen.HeatPump.name)},
                     onShoppingListClicked = {navController.navigate(AppScreen.ShoppingList.name)},
                     onSettingsClicked = {navController.navigate(AppScreen.Settings.name)},
+                    context = LocalContext.current
                 )
             }
 
@@ -109,11 +112,12 @@ fun TammelaApp(
 
             // Remote Control Screen
             composable(route = AppScreen.Remote.name) {
+                RemoteScreen(LocalContext.current, modifier)
             }
 
             // Heat Pump Screen
             composable(route = AppScreen.HeatPump.name) {
-                //HeatPumpScreen()
+                HeatPumpScreen(LocalContext.current, modifier)
             }
 
             // Shopping List Screen
@@ -124,7 +128,7 @@ fun TammelaApp(
             // Settings Screen
             composable(route = AppScreen.Settings.name) {
                 val context = LocalContext.current
-                SettingsScreen(context)
+                SettingsScreen(context, modifier)
             }
         }
     }

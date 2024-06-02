@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -88,13 +89,15 @@ fun StartInfo(
                 containerColor = Color.Gray.copy(alpha = 0.2f),
                 contentColor = Color.Black))
         {
-            Icon(
-                imageVector = Icons.Filled.Refresh,
-                contentDescription = "Refresh",
-                modifier = Modifier.size(ButtonDefaults.IconSize)
-            )
-            Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-            Text("Päivitä")
+
+                Icon(
+                    imageVector = Icons.Filled.Refresh,
+                    contentDescription = "Refresh",
+                    modifier = Modifier.size(ButtonDefaults.IconSize)
+                )
+                Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
+                Text("Päivitä")
+
         }
         Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             if (indoorSensor != null && outdoorSensor != null) {
@@ -108,11 +111,11 @@ fun StartInfo(
             Text(
                 fontWeight = FontWeight(700),
                 style = MaterialTheme.typography.titleSmall,
-                text = "Viimeisimmät tapahtumat:"
+                text = "Viimeisin etäohjauskomento:"
             )
             // Display RemoteHistory information safely
             val remoteHistory = remoteHistoryState
-            Row (modifier.padding(16.dp))
+            Row (modifier.padding(10.dp))
             {
                 if (remoteHistory != null && remoteHistory.isNotEmpty()) {
                     LazyColumn() {

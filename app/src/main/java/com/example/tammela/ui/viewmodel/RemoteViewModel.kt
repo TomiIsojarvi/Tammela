@@ -1,5 +1,6 @@
 package com.example.tammela.ui.viewmodel
 
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.RemoteHistory
@@ -18,8 +19,15 @@ class RemoteViewModel : ViewModel() {
     private val _history = MutableStateFlow<Array<RemoteHistory>?>(emptyArray())
     val history: StateFlow<Array<RemoteHistory>?> = _history
 
+    private val _user = MutableStateFlow("ALL")
+    val user: StateFlow<String> = _user
+
+    private val _amount = MutableStateFlow("1")
+    val amount: StateFlow<String> = _amount
     fun getRemote() {
-        val url = "https://www.isoseppo.fi/eTammela/api/system/get_command_history.php?user=ALL&system=Tammela&amount=5"
+        val userValue = _user.value
+        val amountValue = _amount.value
+        val url = "https://www.isoseppo.fi/eTammela/api/system/get_command_history.php?user=$userValue&system=Tammela&amount=$amountValue"
         val header = emptyMap<String, String>()
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,5 +56,15 @@ class RemoteViewModel : ViewModel() {
         viewModelScope.launch {
             getRemote()
         }
+    }
+
+    fun setUser(newUser: String) {
+        _user.value = newUser
+        refresRemoteData()
+    }
+
+    fun setAmount(newAmount: String) {
+        _amount.value = newAmount
+        refresRemoteData()
     }
 }

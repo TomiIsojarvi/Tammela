@@ -1,9 +1,12 @@
 package com.example.tammela.ui.viewmodel
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.RemoteStatus
@@ -21,13 +24,35 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalCoroutinesApi::class)
-class UserAuthViewModel : ViewModel() {
-    private val _authInfo = MutableStateFlow(UserAuth("", "", "", ""))
-    val authInfo: StateFlow<UserAuth> = _authInfo
 
-    private suspend fun getAuthInfo(userName: String): Boolean {
-        val url = "https://www.isoseppo.fi/eTammela/api/users/get_user_authorization.php?user=${userName}&system=Tammela"
+/*
+class UserAuthViewModel : ViewModel() {
+
+    // MutableStateFlow to hold the current user authentication state
+    private val _userAuthState = MutableStateFlow<UserAuth?>(null)
+
+    // Expose the user authentication state as StateFlow
+    val userAuthState: StateFlow<UserAuth?> = _userAuthState
+
+    // Function to update the user authentication state
+    fun updateUserAuth(newUserAuth: UserAuth) {
+        _userAuthState.value = newUserAuth
+    }
+
+    // Function to clear the user authentication state
+    fun clearUserAuth() {
+        _userAuthState.value = null
+    }
+
+    // Private MutableStateFlow to hold the validity of the user authentication
+    private val _isValid = MutableStateFlow(false)
+
+    // Expose the validity of the user authentication as StateFlow
+    val isValid: StateFlow<Boolean> = _isValid
+
+    // Function to fetch user authentication data from a remote source
+    suspend fun fetchUserAuthData(username: String, context: Context): Boolean {
+        val url = "https://www.isoseppo.fi/eTammela/api/users/get_user_authorization.php?user=${username}&system=Tammela"
         val header = emptyMap<String, String>()
 
         val validationFlow = MutableStateFlow(false)
@@ -39,27 +64,69 @@ class UserAuthViewModel : ViewModel() {
                     is Result.Failure -> {
                         val ex = result.getException()
                         validationFlow.value = false
+                        //Toast.makeText(context, validationFlow.value.toString(), Toast.LENGTH_SHORT).show()
+                        _isValid.value = false
                     }
                     is Result.Success -> {
                         val (data, _) = result
                         data?.let {
-                            _authInfo.value = it
+                            _userAuthState.value = it
                             validationFlow.value = it.reply == "OK"
+                            //Toast.makeText(context, validationFlow.value.toString(), Toast.LENGTH_SHORT).show()
+                            _isValid.value = true
                         }
                     }
                 }
             }
+        return _isValid.value
+    }
+}
+*/
 
-        return validationFlow.first()
+class UserAuthViewModel : ViewModel() {
+
+    // MutableStateFlow to hold the current user authentication state
+    private val _userAuthState = MutableStateFlow<UserAuth?>(null)
+
+    // Expose the user authentication state as StateFlow
+    val userAuthState: StateFlow<UserAuth?> = _userAuthState
+
+    // Function to update the user authentication state
+    fun updateUserAuth(newUserAuth: UserAuth) {
+        _userAuthState.value = newUserAuth
     }
 
-    val userNameHasError: StateFlow<Boolean> = snapshotFlow { "Seppo" }
-        .mapLatest { userName ->
-            getAuthInfo(userName)
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = false
-        )
+    // Function to clear the user authentication state
+    fun clearUserAuth() {
+        _userAuthState.value = null
+    }
+
+    // Private MutableStateFlow to hold the validity of the user authentication
+    private val _isValid = MutableStateFlow(false)
+
+    // Expose the validity of the user authentication as StateFlow
+    val isValid: StateFlow<Boolean> = _isValid
+
+    // Function to fetch user authentication data from a remote source
+    fun fetchUserAuthData(username: String, context: Context) {
+        val url = "https://www.isoseppo.fi/eTammela/api/users/get_user_authorization.php?user=${username}&system=Tammela"
+        val header = emptyMap<String, String>()
+
+        Fuel.get(url)
+            .header(header)
+            .responseObject(UserAuth.Deserializer()) { _, _, result ->
+                when (result) {
+                    is Result.Failure -> {
+                        _isValid.value = false
+                    }
+                    is Result.Success -> {
+                        val (data, _) = result
+                        data?.let {
+                            _userAuthState.value = it
+                            _isValid.value = it.reply == "OK"
+                        }
+                    }
+                }
+            }
+    }
 }

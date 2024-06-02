@@ -1,8 +1,13 @@
 package com.example.tammela.ui.screen
 
+import android.content.Context
+import android.transition.Visibility
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -12,31 +17,40 @@ import androidx.compose.material.icons.outlined.CastConnected
 import androidx.compose.material.icons.outlined.NoteAlt
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Speed
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.ui.component.StartInfo
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
+import com.example.tammela.ui.viewmodel.SettingsViewModel
+import com.example.tammela.ui.viewmodel.UserAuthViewModel
+import kotlinx.coroutines.launch
 
 
-data class ButtonData(val icon: ImageVector, val text: String, val onClick: () -> Unit)
+data class ButtonData(val icon: ImageVector, val text: String, val onClick: () -> Unit, var enabled: Boolean)
 
 @Composable
 fun ButtonItem(buttonData: ButtonData) {
     Column(
-        //modifier = Modifier.fillMaxSize(),
-        //verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Surface(
@@ -45,8 +59,8 @@ fun ButtonItem(buttonData: ButtonData) {
             shape = CircleShape,
             color = Color.Gray.copy(alpha = 0.2f)
         ) {
-            // Muista FilledIconButton!!!
             IconButton(
+                enabled = buttonData.enabled,
                 onClick = buttonData.onClick,
             ) {
                 Icon(
@@ -76,6 +90,7 @@ fun ButtonRow(buttons: List<ButtonData>) {
 //-----------------------------------------------------------------------------
 // Start Screen for Tammela application
 //-----------------------------------------------------------------------------
+/*
 @Composable
 fun StartScreen(
     onMetersClicked: () -> Unit,
@@ -83,10 +98,18 @@ fun StartScreen(
     onHeatPumpClicked: () -> Unit,
     onShoppingListClicked: () -> Unit,
     onSettingsClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    context: Context
 ) {
     val sensorViewModel: SensorViewModel = viewModel()
     val remoteViewModel: RemoteViewModel = viewModel()
+    val userAuthViewModel: UserAuthViewModel = viewModel()
+
+    var isLoading by remember { mutableStateOf(true) }
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val coroutineScope = rememberCoroutineScope()
+
+    var isValidUsername by remember { mutableStateOf(false) }
 
     val buttons = remember {
         listOf(
@@ -97,29 +120,107 @@ fun StartScreen(
             ButtonData(Icons.Outlined.Settings, "Asetukset", onSettingsClicked),
         )
     }
-    Column {
-        StartInfo(sensorViewModel, remoteViewModel,  modifier)
-        ButtonRow(buttons)
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            settingsViewModel.loadUserData(context)
+            isLoading = false
+        }
     }
-}
 
-//-----------------------------------------------------------------------------
-// Preview for Start Screen
-//-----------------------------------------------------------------------------
-@Preview(showBackground = true, device = "id:pixel_7_pro", showSystemUi = true)
+    LaunchedEffect(settingsViewModel.username) {
+        if (settingsViewModel.username.isNotEmpty()) {
+            isValidUsername = userAuthViewModel.fetchUserAuthData(settingsViewModel.username, context)
+        }
+    }
+
+    if (isLoading || settingsViewModel.username.isEmpty() || !isValidUsername) {
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        */
+/*LaunchedEffect(key1 = Unit) {
+            coroutineScope.launch {
+                isValidUsername = userAuthViewModel.fetchUserAuthData(settingsViewModel.username, context)
+            }
+        }*//*
+
+
+        Column {
+            StartInfo(sensorViewModel, remoteViewModel, modifier)
+            ButtonRow(buttons)
+
+        }
+    }
+}*/
+
 @Composable
-fun StartScreenPreview() {
-    val onMetersClicked = {}
-    val onRemoteClicked = {}
-    val onAirPumpClicked = {}
-    val onShoppingListClicked = {}
-    val onSettingsClicked = {}
+fun StartScreen(
+    onMetersClicked: () -> Unit,
+    onRemoteClicked: () -> Unit,
+    onHeatPumpClicked: () -> Unit,
+    onShoppingListClicked: () -> Unit,
+    onSettingsClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    context: Context
+) {
+    val sensorViewModel: SensorViewModel = viewModel()
+    val remoteViewModel: RemoteViewModel = viewModel()
+    val userAuthViewModel: UserAuthViewModel = viewModel()
+    val settingsViewModel: SettingsViewModel = viewModel()
 
-    StartScreen(
-        onMetersClicked,
-        onRemoteClicked,
-        onAirPumpClicked,
-        onShoppingListClicked,
-        onSettingsClicked
-    )
+    var isLoading by remember { mutableStateOf(true) }
+    val coroutineScope = rememberCoroutineScope()
+
+    val buttons = remember {
+        listOf(
+            ButtonData(Icons.Outlined.Speed, "Anturit", onMetersClicked, true),
+            ButtonData(Icons.Outlined.CastConnected, "Etäohjaus", onRemoteClicked, false),
+            ButtonData(Icons.Outlined.Air, "ILP", onHeatPumpClicked, false),
+            ButtonData(Icons.Outlined.NoteAlt, "Ostoslista", onShoppingListClicked, true),
+            ButtonData(Icons.Outlined.Settings, "Asetukset", onSettingsClicked, true),
+        )
+    }
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            settingsViewModel.loadUserData(context)
+            isLoading = false
+        }
+    }
+
+    val isValidUsername by userAuthViewModel.isValid.collectAsState()
+
+    LaunchedEffect(settingsViewModel.username) {
+        if (settingsViewModel.username.isNotEmpty()) {
+            userAuthViewModel.fetchUserAuthData(settingsViewModel.username, context)
+        }
+    }
+
+    if (isLoading || settingsViewModel.username.isEmpty() /*|| !isValidUsername*/) {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxSize()
+        ) {
+            CircularProgressIndicator()
+        }
+    } else {
+        if (isValidUsername) {
+            buttons[1].enabled = true
+            buttons[2].enabled = true
+        } else {
+            buttons[1].enabled = false
+            buttons[2].enabled = false
+        }
+
+        Column {
+            StartInfo(sensorViewModel, remoteViewModel, modifier)
+            ButtonRow(buttons)
+        }
+    }
 }
