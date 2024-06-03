@@ -11,9 +11,15 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,6 +30,15 @@ import com.example.tammela.ui.screen.RemoteScreen
 import com.example.tammela.ui.screen.SensorScreen
 import com.example.tammela.ui.screen.SettingsScreen
 import com.example.tammela.ui.screen.StartScreen
+import com.example.tammela.ui.viewmodel.SettingsViewModel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+import android.content.Context
+import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.Alignment
+import com.example.tammela.ui.screen.LoginScreen
+import kotlinx.coroutines.delay
 
 //-----------------------------------------------------------------------------
 // enum values that represent the screens in the app
@@ -63,6 +78,7 @@ fun TammelaAppBar(
 
 @Composable
 fun TammelaApp(
+    context: Context = LocalContext.current,
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
@@ -73,8 +89,28 @@ fun TammelaApp(
         backStackEntry?.destination?.route?: AppScreen.Start.name
     )
 
+    var isLoading by remember { mutableStateOf(true) }
+    var showLogin by remember { mutableStateOf(true) }
+    val coroutineScope = rememberCoroutineScope()
+    val settingsViewModel: SettingsViewModel = viewModel()
+
     fun onChangeScreen(screen: AppScreen) {
         navController.navigate(screen.name)
+    }
+
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            settingsViewModel.loadUserData(context)
+            isLoading = false
+        }
+    }
+
+    LaunchedEffect(settingsViewModel.username) {
+        if (settingsViewModel.username.isNotEmpty()) {
+            showLogin = false
+        } else {
+            showLogin = true
+        }
     }
 
     Scaffold(
@@ -93,16 +129,21 @@ fun TammelaApp(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+
             // Start Screen
             composable(route = AppScreen.Start.name) {
-                StartScreen(
-                    onMetersClicked = {navController.navigate(AppScreen.Sensors.name)},
-                    onRemoteClicked = {navController.navigate(AppScreen.Remote.name)},
-                    onHeatPumpClicked = {navController.navigate(AppScreen.HeatPump.name)},
-                    onShoppingListClicked = {navController.navigate(AppScreen.ShoppingList.name)},
-                    onSettingsClicked = {navController.navigate(AppScreen.Settings.name)},
-                    context = LocalContext.current
-                )
+                if (showLogin) {
+                    LoginScreen(context = context)
+                } else {
+                    StartScreen(
+                        onMetersClicked = { navController.navigate(AppScreen.Sensors.name) },
+                        onRemoteClicked = { navController.navigate(AppScreen.Remote.name) },
+                        onHeatPumpClicked = { navController.navigate(AppScreen.HeatPump.name) },
+                        onShoppingListClicked = { navController.navigate(AppScreen.ShoppingList.name) },
+                        onSettingsClicked = { navController.navigate(AppScreen.Settings.name) },
+                        context = LocalContext.current
+                    )
+                }
             }
 
             // Sensors Screen
