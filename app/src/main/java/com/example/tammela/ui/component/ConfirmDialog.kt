@@ -22,7 +22,7 @@ fun ConfirmDialog(
         },
         text = {
             Text(
-                text = "Haluatko lähettää viestin ${command}?"
+                text = "Haluatko lähettää viestin $command?"
             )
         },
         onDismissRequest = {

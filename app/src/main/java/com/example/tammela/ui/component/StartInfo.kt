@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -28,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.tammela.data.model.RemoteStatus
+import com.example.tammela.ui.viewmodel.HeatPumpViewModel
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
 import kotlinx.datetime.LocalDateTime
@@ -62,15 +61,18 @@ fun TempTile(title: String, value: Double, modifier: Modifier = Modifier) {
 fun StartInfo(
     sensorViewModel: SensorViewModel = viewModel(),
     remoteViewModel: RemoteViewModel = viewModel(),
+    heatPumpViewModel: HeatPumpViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
     val sensors by sensorViewModel.sensors.collectAsState(initial = emptyList())
-    val remoteStatus by remoteViewModel.status.collectAsState(initial = RemoteStatus("", "", "", "", ""))
     val remoteHistoryState by remoteViewModel.history.collectAsState(initial = emptyArray())
+    val heatPumpHistoryState by heatPumpViewModel.history.collectAsState(initial = emptyArray())
+
 
     LaunchedEffect(Unit) {
         sensorViewModel.getSensors()
-        remoteViewModel.getRemote()
+        remoteViewModel.getRemoteCommand()
+        heatPumpViewModel.getHeatPumpCommand()
     }
 
     val indoorSensor = sensors.firstOrNull { it.name == "Olohuone" }
@@ -108,18 +110,19 @@ fun StartInfo(
             }
         }
         Column (modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+            //-------------------------------------------------------------------------------------
             Text(
                 fontWeight = FontWeight(700),
                 style = MaterialTheme.typography.titleSmall,
                 text = "Viimeisin etäohjauskomento:"
             )
             // Display RemoteHistory information safely
-            val remoteHistory = remoteHistoryState
+            val commandHistory = remoteHistoryState
             Row (modifier.padding(10.dp))
             {
-                if (remoteHistory != null && remoteHistory.isNotEmpty()) {
+                if (commandHistory != null && commandHistory.isNotEmpty()) {
                     LazyColumn() {
-                        items(remoteHistory) { item ->
+                        items(commandHistory) { item ->
                             var localDateTime = LocalDateTime.parse(
                                 input = item.time,
                                 format = LocalDateTime.Format {
@@ -151,9 +154,51 @@ fun StartInfo(
                     CircularProgressIndicator()
                 }
             }
+            //-------------------------------------------------------------------------------------
+            Text(
+                fontWeight = FontWeight(700),
+                style = MaterialTheme.typography.titleSmall,
+                text = "Viimeisin ILP-komento:"
+            )
+            // Display RemoteHistory information safely
+            val heatPumpHistory = heatPumpHistoryState
+            Row (modifier.padding(10.dp))
+            {
+                if (heatPumpHistory != null && heatPumpHistory.isNotEmpty()) {
+                    LazyColumn() {
+                        items(heatPumpHistory) { item ->
+                            var localDateTime = LocalDateTime.parse(
+                                input = item.time,
+                                format = LocalDateTime.Format {
+                                    byUnicodePattern("yyyy-MM-dd HH:mm:ss")
+                                }
+                            )
+
+                            Row {
+                                Text(
+                                    text = "${item.user}: ",
+                                    fontWeight = FontWeight(700),
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                                Text(
+                                    text = "${localDateTime.format(
+                                        LocalDateTime.Format {
+                                            byUnicodePattern("d.M.yyyy HH.mm") }
+                                    )}, ")
+                                Text(
+                                    text = "${item.state}",
+                                    fontWeight = FontWeight(700),
+                                    style = MaterialTheme.typography.titleSmall,
+                                )
+                            }
+                        }
+                    }
+
+                } else {
+                    CircularProgressIndicator()
+                }
+            }
 
         }
-
-
     }
 }

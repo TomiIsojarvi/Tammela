@@ -2,81 +2,43 @@ package com.example.tammela.ui.screen
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.tammela.data.model.UserAuth
 import com.example.tammela.ui.viewmodel.SettingsViewModel
 import com.example.tammela.ui.viewmodel.UserAuthViewModel
 import kotlinx.coroutines.launch
 
-val Context.dataStore by preferencesDataStore(name = "settings")
-
 @Composable
-fun TrailingIconButton(
-    icon: ImageVector,
-    contentDescription: String,
-    tint: Color,
-    onClick: () -> Unit
-) {
-    IconButton(onClick = onClick) {
-        Icon(
-            imageVector = icon,
-            contentDescription = contentDescription,
-            tint = tint
-        )
-    }
-}
-
-@Composable
-fun SettingsScreen(
+fun LoginScreen(
     context: Context,
     modifier: Modifier = Modifier,
 ) {
     val settingsViewModel: SettingsViewModel = viewModel()
-    val userAuthViewModel: UserAuthViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
 
     // Load initial data when the composable is first composed

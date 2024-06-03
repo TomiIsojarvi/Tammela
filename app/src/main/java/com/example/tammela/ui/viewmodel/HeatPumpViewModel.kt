@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.CommandHistory
 import com.example.tammela.data.model.CommandStatus
-
 import com.github.kittinunf.fuel.Fuel
 import com.github.kittinunf.result.Result
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class RemoteViewModel : ViewModel() {
+class HeatPumpViewModel : ViewModel() {
     private val _status = MutableStateFlow(CommandStatus("", "", "", "", "", ""))
     val status: StateFlow<CommandStatus> = _status
 
@@ -22,17 +21,18 @@ class RemoteViewModel : ViewModel() {
     private val _user = MutableStateFlow("ALL")
     val user: StateFlow<String> = _user
 
-    private val _device = MutableStateFlow("0")
+    private val _device = MutableStateFlow("1")
     val device: StateFlow<String> = _device
 
     private val _amount = MutableStateFlow("1")
     val amount: StateFlow<String> = _amount
 
-    fun getRemoteCommand() {
+    fun getHeatPumpCommand() {
         val userValue = _user.value
         val amountValue = _amount.value
         val deviceValue = _device.value
-        val url = "https://www.isoseppo.fi/eTammela/api/system/get_command_history.php?user=$userValue&system=Tammela&device=$deviceValue&amount=$amountValue"
+        val url =
+            "https://www.isoseppo.fi/eTammela/api/system/get_command_history.php?user=$userValue&system=Tammela&device=$deviceValue&amount=$amountValue"
         val header = emptyMap<String, String>()
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -45,6 +45,7 @@ class RemoteViewModel : ViewModel() {
                             // Handle the error appropriately
                             println("Error fetching status: ${ex.message}")
                         }
+
                         is Result.Success -> {
                             val (data, _) = result
                             data?.let {
@@ -59,7 +60,7 @@ class RemoteViewModel : ViewModel() {
 
     fun refresRemoteData() {
         viewModelScope.launch {
-            getRemoteCommand()
+            getHeatPumpCommand()
         }
     }
 

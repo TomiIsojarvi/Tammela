@@ -1,8 +1,6 @@
 package com.example.tammela.ui.screen
 
 import android.content.Context
-import android.transition.Visibility
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,11 +32,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.ui.component.StartInfo
+import com.example.tammela.ui.viewmodel.HeatPumpViewModel
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
 import com.example.tammela.ui.viewmodel.SettingsViewModel
@@ -87,10 +84,6 @@ fun ButtonRow(buttons: List<ButtonData>) {
     }
 }
 
-//-----------------------------------------------------------------------------
-// Start Screen for Tammela application
-//-----------------------------------------------------------------------------
-/*
 @Composable
 fun StartScreen(
     onMetersClicked: () -> Unit,
@@ -103,74 +96,7 @@ fun StartScreen(
 ) {
     val sensorViewModel: SensorViewModel = viewModel()
     val remoteViewModel: RemoteViewModel = viewModel()
-    val userAuthViewModel: UserAuthViewModel = viewModel()
-
-    var isLoading by remember { mutableStateOf(true) }
-    val settingsViewModel: SettingsViewModel = viewModel()
-    val coroutineScope = rememberCoroutineScope()
-
-    var isValidUsername by remember { mutableStateOf(false) }
-
-    val buttons = remember {
-        listOf(
-            ButtonData(Icons.Outlined.Speed, "Anturit", onMetersClicked),
-            ButtonData(Icons.Outlined.CastConnected, "Etäohjaus", onRemoteClicked),
-            ButtonData(Icons.Outlined.Air, "ILP", onHeatPumpClicked),
-            ButtonData(Icons.Outlined.NoteAlt, "Ostoslista", onShoppingListClicked),
-            ButtonData(Icons.Outlined.Settings, "Asetukset", onSettingsClicked),
-        )
-    }
-
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            settingsViewModel.loadUserData(context)
-            isLoading = false
-        }
-    }
-
-    LaunchedEffect(settingsViewModel.username) {
-        if (settingsViewModel.username.isNotEmpty()) {
-            isValidUsername = userAuthViewModel.fetchUserAuthData(settingsViewModel.username, context)
-        }
-    }
-
-    if (isLoading || settingsViewModel.username.isEmpty() || !isValidUsername) {
-
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            CircularProgressIndicator()
-        }
-    } else {
-        */
-/*LaunchedEffect(key1 = Unit) {
-            coroutineScope.launch {
-                isValidUsername = userAuthViewModel.fetchUserAuthData(settingsViewModel.username, context)
-            }
-        }*//*
-
-
-        Column {
-            StartInfo(sensorViewModel, remoteViewModel, modifier)
-            ButtonRow(buttons)
-
-        }
-    }
-}*/
-
-@Composable
-fun StartScreen(
-    onMetersClicked: () -> Unit,
-    onRemoteClicked: () -> Unit,
-    onHeatPumpClicked: () -> Unit,
-    onShoppingListClicked: () -> Unit,
-    onSettingsClicked: () -> Unit,
-    modifier: Modifier = Modifier,
-    context: Context
-) {
-    val sensorViewModel: SensorViewModel = viewModel()
-    val remoteViewModel: RemoteViewModel = viewModel()
+    val heatPumpViewModel: HeatPumpViewModel = viewModel()
     val userAuthViewModel: UserAuthViewModel = viewModel()
     val settingsViewModel: SettingsViewModel = viewModel()
 
@@ -179,7 +105,7 @@ fun StartScreen(
 
     val buttons = remember {
         listOf(
-            ButtonData(Icons.Outlined.Speed, "Anturit", onMetersClicked, true),
+            ButtonData(Icons.Outlined.Speed, "Mittarit", onMetersClicked, true),
             ButtonData(Icons.Outlined.CastConnected, "Etäohjaus", onRemoteClicked, false),
             ButtonData(Icons.Outlined.Air, "ILP", onHeatPumpClicked, false),
             ButtonData(Icons.Outlined.NoteAlt, "Ostoslista", onShoppingListClicked, true),
@@ -219,7 +145,7 @@ fun StartScreen(
         }
 
         Column {
-            StartInfo(sensorViewModel, remoteViewModel, modifier)
+            StartInfo(sensorViewModel, remoteViewModel, heatPumpViewModel, modifier)
             ButtonRow(buttons)
         }
     }

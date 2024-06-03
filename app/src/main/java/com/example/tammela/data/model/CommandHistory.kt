@@ -4,17 +4,17 @@ import com.github.kittinunf.fuel.core.ResponseDeserializable
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 
-data class RemoteStatus(
-    val System: String,
+data class CommandHistory(
+    val rowId: Int,
+    val time: String,
     val user: String,
-    val op_status: String,
-    val reply: String,
-    val extra: String
+    val state: String,
+    val device: String
 ) {
-    class Deserializer : ResponseDeserializable<RemoteStatus> {
-        override fun deserialize(content: String): RemoteStatus? {
+    class Deserializer : ResponseDeserializable<Array<CommandHistory>> {
+        override fun deserialize(content: String): Array<CommandHistory>? {
             return try {
-                Gson().fromJson(content, RemoteStatus::class.java)
+                Gson().fromJson(content, Array<CommandHistory>::class.java)
             } catch (e: JsonParseException) {
                 e.printStackTrace()
                 null

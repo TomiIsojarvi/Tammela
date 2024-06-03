@@ -9,7 +9,6 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.tammela.data.model.RemoteStatus
 import com.example.tammela.data.model.Sensor
 import com.example.tammela.data.model.UserAuth
 import com.github.kittinunf.fuel.Fuel
