@@ -129,12 +129,9 @@ fun TammelaApp(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-
             // Start Screen
             composable(route = AppScreen.Start.name) {
-                if (showLogin) {
-                    LoginScreen(context = context)
-                } else {
+
                     StartScreen(
                         onMetersClicked = { navController.navigate(AppScreen.Sensors.name) },
                         onRemoteClicked = { navController.navigate(AppScreen.Remote.name) },
@@ -143,7 +140,7 @@ fun TammelaApp(
                         onSettingsClicked = { navController.navigate(AppScreen.Settings.name) },
                         context = LocalContext.current
                     )
-                }
+
             }
 
             // Sensors Screen

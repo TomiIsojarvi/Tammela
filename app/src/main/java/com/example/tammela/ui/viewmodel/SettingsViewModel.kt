@@ -17,11 +17,15 @@ import kotlinx.coroutines.launch
 
 // Define the DataStore keys
 val USER_NAME = stringPreferencesKey("user_name")
+val NEW_USER_NAME = stringPreferencesKey("new_user_name")
 val REMOTE_NUMBER = stringPreferencesKey("remote_number")
 val HEAT_PUMP_NUMBER = stringPreferencesKey("heat_pump_number")
 
 class SettingsViewModel : ViewModel() {
     var username by mutableStateOf("")
+        private set
+
+    var newUsername by mutableStateOf("")
         private set
 
     var remoteNumber by mutableStateOf("")
@@ -32,6 +36,10 @@ class SettingsViewModel : ViewModel() {
 
     fun updateUsername(input: String) {
         username = input
+    }
+
+    fun updateNewUsername(input: String) {
+        newUsername = input
     }
 
     fun updateRemoteNumber(input: String) {
@@ -46,6 +54,14 @@ class SettingsViewModel : ViewModel() {
         viewModelScope.launch {
             context.dataStore.edit { settings ->
                 settings[USER_NAME] = username
+            }
+        }
+    }
+
+    fun saveNewUserName(context: Context) {
+        viewModelScope.launch {
+            context.dataStore.edit { settings ->
+                settings[USER_NAME] = newUsername
             }
         }
     }

@@ -149,20 +149,20 @@ fun SettingsScreen(
                 if (settingsViewModel.remoteNumber.isNotBlank()) {
                     TrailingIconButton(
                         icon = Icons.Default.Clear,
-                        contentDescription = "Anna etäohjauksen GSM-numero",
+                        contentDescription = "Tyhjennä",
                         tint = Color.Black,
                         onClick = { settingsViewModel.updateRemoteNumber("") }
                     )
                 }
             },
-            supportingText = {
+            /*supportingText = {
                 if (settingsViewModel.remoteNumber.isEmpty()) {
                     Text(
                         text = "Syötä GSM-numero",
                         color = Color.Red
                     )
                 }
-            }
+            }*/
         )
         TextField(
             modifier = modifier
@@ -181,23 +181,23 @@ fun SettingsScreen(
                 if (settingsViewModel.heatPumpNumber.isNotBlank()) {
                     TrailingIconButton(
                         icon = Icons.Default.Clear,
-                        contentDescription = "Anna ilmalämpöpumpun GSM-numero",
+                        contentDescription = "Tyhjennä",
                         tint = Color.Black,
                         onClick = { settingsViewModel.updateHeatPumpNumber("") }
                     )
                 }
             },
-            supportingText = {
+            /*supportingText = {
                 if (settingsViewModel.heatPumpNumber.isEmpty()) {
                     Text(
                         text = "Syötä GSM-numero",
                         color = Color.Red
                     )
                 }
-            }
+            }*/
         )
         Button(
-            enabled = true,
+            //enabled = settingsViewModel.username.isNotEmpty(),
             modifier = modifier.padding(10.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Gray.copy(alpha = 0.2f),

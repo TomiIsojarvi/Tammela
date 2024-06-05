@@ -285,7 +285,7 @@ suspend fun sendSms(context: Context, settingsViewModel: SettingsViewModel, mess
     } else {
         Toast.makeText(
             context,
-            "Puhelinnumero ei ole määritelty",
+            "Puhelinnumeroa ei ole määritelty",
             Toast.LENGTH_LONG
         ).show()
     }
