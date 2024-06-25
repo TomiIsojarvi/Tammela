@@ -58,7 +58,8 @@ class RemoteViewModel : ViewModel() {
     }
 
     fun sendRemoteData( user: String, command: String) {
-        val url = "https://www.isoseppo.fi/eTammela/api/system/save_control_command.php?user=Seppo&system=Tammela&command=$command&device=0"
+        val userValue = _user.value
+        val url = "https://www.isoseppo.fi/eTammela/api/system/save_control_command.php?user=$user&system=Tammela&command=$command&device=0"
         val header = emptyMap<String, String>()
 
         viewModelScope.launch(Dispatchers.IO) {

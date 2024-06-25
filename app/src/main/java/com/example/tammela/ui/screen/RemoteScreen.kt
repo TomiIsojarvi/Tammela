@@ -71,7 +71,6 @@ fun RemoteScreen(
         remoteViewModel.setUser("ALL")
         remoteViewModel.setAmount("ALL")
         remoteViewModel.getRemoteCommand()
-        //remoteViewModel.sendRemoteData("moi")
     }
 
     val requestPermissionLauncher = rememberLauncherForActivityResult(
@@ -253,7 +252,7 @@ fun RemoteScreen(
                             == PackageManager.PERMISSION_GRANTED
                         ) {
                             sendSms(context, settingsViewModel, textCommand)
-                            remoteViewModel.sendRemoteData("Seppo", textCommand)
+                            remoteViewModel.sendRemoteData(settingsViewModel.username, textCommand)
                         } else {
                             requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                         }
