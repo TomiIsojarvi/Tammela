@@ -66,11 +66,6 @@ fun SensorCard(sensor: Sensor, modifier: Modifier = Modifier) {
                     Text(
                         text =" % "
                     )
-                    /*Text("Ilmanpaine: ")
-                    Text(
-                        text = "0"
-                    )
-                    Text(" hPa")*/
                 }
                 ///////////////////////////////////////////////////////////////
                 Row (modifier = Modifier.padding(start = 10.dp, bottom = 10.dp, end = 10.dp)) {
@@ -93,18 +88,4 @@ fun SensorCard(sensor: Sensor, modifier: Modifier = Modifier) {
             }
         }
     }
-}
-
-@Preview(showSystemUi = true, showBackground = true)
-@Composable
-fun SensorCardPreview() {
-    SensorCard(Sensor(
-        "Olohuone",
-        "21.05.2024 08:58:50",
-        26.20,
-        54.0,
-        34.0,
-        "jkdgkdgjkd",
-        34),
-        Modifier.padding(0.dp))
 }

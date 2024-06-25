@@ -128,7 +128,7 @@ fun StartScreen(
         }
     }
 
-    if (isLoading /*|| settingsViewModel.username.isEmpty()*/) {
+    if (isLoading) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()

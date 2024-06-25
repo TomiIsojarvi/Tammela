@@ -10,15 +10,19 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class SensorViewModel: ViewModel() {
+class SensorViewModel : ViewModel() {
     private val _sensors = MutableStateFlow<List<Sensor>>(emptyList())
     val sensors: StateFlow<List<Sensor>> = _sensors
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
 
     fun getSensors() {
         val url = "https://www.isoseppo.fi/eTammela/api/get_ruuviTag_info.php?system=Tammela"
         val header = emptyMap<String, String>()
 
         viewModelScope.launch(Dispatchers.IO) {
+            _isLoading.value = true
             Fuel.get(url)
                 .header(header)
                 .responseObject(Sensor.Deserializer()) { _, _, result ->
@@ -32,13 +36,13 @@ class SensorViewModel: ViewModel() {
                             data?.let { _sensors.value = ArrayList(it.toList()) }
                         }
                     }
+                    _isLoading.value = false
                 }
         }
     }
 
     fun refreshSensorData() {
         viewModelScope.launch {
-            // Fetch or update your sensor data here
             getSensors()
         }
     }
@@ -47,3 +51,4 @@ class SensorViewModel: ViewModel() {
         _sensors.value = emptyList()
     }
 }
+

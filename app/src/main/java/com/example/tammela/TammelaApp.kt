@@ -35,6 +35,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import android.content.Context
 import androidx.compose.foundation.layout.Box
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.Alignment
 import com.example.tammela.ui.screen.LoginScreen
@@ -120,7 +121,7 @@ fun TammelaApp(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
-        },
+        }
     ) { innerPadding ->
         NavHost(
             navController = navController,
