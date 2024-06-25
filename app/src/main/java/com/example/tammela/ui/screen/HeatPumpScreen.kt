@@ -355,8 +355,15 @@ fun HeatPumpScreen(
                         ) {
                             sendHeatPumpSms(context, settingsViewModel, textCommand)
 
-                            if (textCommand != "TEMP")
-                                heatPumpViewModel.sendHeatPumpData(settingsViewModel.username, textCommand)
+                            if (textCommand != "TEMP") {
+                                if (heatPumpViewModel.sendHeatPumpData(
+                                    settingsViewModel.username,
+                                    textCommand
+                                ) == true) {
+                                    heatPumpViewModel.refresRemoteData()
+                                }
+
+                            }
                         } else {
                             requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                         }

@@ -11,6 +11,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
+
 
 class RemoteViewModel : ViewModel() {
     private val _status = MutableStateFlow(CommandStatus("", "", "", "", "", ""))
@@ -49,7 +53,7 @@ class RemoteViewModel : ViewModel() {
                             val (data, _) = result
                             data?.let {
                                 _status.value = it
-                                _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray() /// MUUTOS
+                                _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray()
                             }
                         }
                     }
@@ -57,30 +61,33 @@ class RemoteViewModel : ViewModel() {
         }
     }
 
-    fun sendRemoteData( user: String, command: String) {
-        val userValue = _user.value
+    suspend fun sendRemoteData(user: String, command: String): Boolean {
         val url = "https://www.isoseppo.fi/eTammela/api/system/save_control_command.php?user=$user&system=Tammela&command=$command&device=0"
         val header = emptyMap<String, String>()
 
-        viewModelScope.launch(Dispatchers.IO) {
-            Fuel.get(url)
-                .header(header)
-                .responseObject(CommandStatus.Deserializer()) { _, _, result ->
-                    when (result) {
-                        is Result.Failure -> {
-                            val ex = result.getException()
-                            // Handle the error appropriately
-                            println("Error fetching status: ${ex.message}")
-                        }
-                        is Result.Success -> {
-                            val (data, _) = result
-                            data?.let {
-                                _status.value = it
-                                _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray()
+        return withContext(Dispatchers.IO) {
+            suspendCoroutine<Boolean> { continuation ->
+                Fuel.get(url)
+                    .header(header)
+                    .responseObject(CommandStatus.Deserializer()) { _, _, result ->
+                        when (result) {
+                            is Result.Failure -> {
+                                val ex = result.getException()
+                                // Handle the error appropriately
+                                println("Error fetching status: ${ex.message}")
+                                continuation.resume(false)
+                            }
+                            is Result.Success -> {
+                                val (data, _) = result
+                                data?.let {
+                                    _status.value = it
+                                    _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray()
+                                }
+                                continuation.resume(true)
                             }
                         }
                     }
-                }
+            }
         }
     }
 
@@ -109,4 +116,3 @@ class RemoteViewModel : ViewModel() {
         refresRemoteData()
     }
 }
-

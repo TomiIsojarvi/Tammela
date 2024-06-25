@@ -253,9 +253,14 @@ fun RemoteScreen(
                         ) {
                             sendSms(context, settingsViewModel, textCommand)
 
-
-                            if (textCommand != "TILANNE")
-                                remoteViewModel.sendRemoteData(settingsViewModel.username, textCommand)
+                            if (textCommand != "TILANNE") {
+                                if (remoteViewModel.sendRemoteData(
+                                    settingsViewModel.username,
+                                    textCommand
+                                ) == true) {
+                                    remoteViewModel.refresRemoteData()
+                                }
+                            }
                         } else {
                             requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                         }
