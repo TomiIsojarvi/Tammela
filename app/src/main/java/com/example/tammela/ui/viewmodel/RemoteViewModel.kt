@@ -16,8 +16,8 @@ class RemoteViewModel : ViewModel() {
     private val _status = MutableStateFlow(CommandStatus("", "", "", "", "", ""))
     val status: StateFlow<CommandStatus> = _status
 
-    private val _history = MutableStateFlow<Array<CommandHistory>?>(emptyArray())
-    val history: StateFlow<Array<CommandHistory>?> = _history
+    private var _history = MutableStateFlow<Array<CommandHistory>?>(emptyArray())
+    var history: StateFlow<Array<CommandHistory>?> = _history
 
     private val _user = MutableStateFlow("ALL")
     val user: StateFlow<String> = _user
@@ -49,7 +49,7 @@ class RemoteViewModel : ViewModel() {
                             val (data, _) = result
                             data?.let {
                                 _status.value = it
-                                _history.value = CommandHistory.Deserializer().deserialize(it.extra)
+                                _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray() /// MUUTOS
                             }
                         }
                     }
@@ -76,7 +76,7 @@ class RemoteViewModel : ViewModel() {
                             val (data, _) = result
                             data?.let {
                                 _status.value = it
-                                _history.value = CommandHistory.Deserializer().deserialize(it.extra)
+                                _history.value = CommandHistory.Deserializer().deserialize(it.extra) ?: emptyArray()
                             }
                         }
                     }
@@ -88,6 +88,10 @@ class RemoteViewModel : ViewModel() {
         viewModelScope.launch {
             getRemoteCommand()
         }
+    }
+
+    fun clearRemoteData() {
+        _history.value = emptyArray()
     }
 
     fun setUser(newUser: String) {
@@ -105,3 +109,4 @@ class RemoteViewModel : ViewModel() {
         refresRemoteData()
     }
 }
+

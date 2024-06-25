@@ -136,9 +136,18 @@ fun StartScreen(
             CircularProgressIndicator()
         }
     } else {
-        if (isValidUsername) {
-            buttons[1].enabled = true
-            buttons[2].enabled = true
+        if (isValidUsername && settingsViewModel.username.isNotEmpty()) {
+            if (settingsViewModel.remoteNumber.isNotEmpty()) {
+                buttons[1].enabled = true
+            } else {
+                buttons[1].enabled = false
+            }
+
+            if (settingsViewModel.heatPumpNumber.isNotEmpty()) {
+                buttons[2].enabled = true
+            } else {
+                buttons[2].enabled = false
+            }
         } else {
             buttons[1].enabled = false
             buttons[2].enabled = false

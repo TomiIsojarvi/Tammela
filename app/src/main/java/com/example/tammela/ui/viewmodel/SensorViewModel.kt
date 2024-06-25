@@ -42,4 +42,8 @@ class SensorViewModel: ViewModel() {
             getSensors()
         }
     }
+
+    fun clearSensorData() {
+        _sensors.value = emptyList()
+    }
 }

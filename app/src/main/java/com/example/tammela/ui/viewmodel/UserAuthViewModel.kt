@@ -23,65 +23,6 @@ import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-
-/*
-class UserAuthViewModel : ViewModel() {
-
-    // MutableStateFlow to hold the current user authentication state
-    private val _userAuthState = MutableStateFlow<UserAuth?>(null)
-
-    // Expose the user authentication state as StateFlow
-    val userAuthState: StateFlow<UserAuth?> = _userAuthState
-
-    // Function to update the user authentication state
-    fun updateUserAuth(newUserAuth: UserAuth) {
-        _userAuthState.value = newUserAuth
-    }
-
-    // Function to clear the user authentication state
-    fun clearUserAuth() {
-        _userAuthState.value = null
-    }
-
-    // Private MutableStateFlow to hold the validity of the user authentication
-    private val _isValid = MutableStateFlow(false)
-
-    // Expose the validity of the user authentication as StateFlow
-    val isValid: StateFlow<Boolean> = _isValid
-
-    // Function to fetch user authentication data from a remote source
-    suspend fun fetchUserAuthData(username: String, context: Context): Boolean {
-        val url = "https://www.isoseppo.fi/eTammela/api/users/get_user_authorization.php?user=${username}&system=Tammela"
-        val header = emptyMap<String, String>()
-
-        val validationFlow = MutableStateFlow(false)
-
-        Fuel.get(url)
-            .header(header)
-            .responseObject(UserAuth.Deserializer()) { _, _, result ->
-                when (result) {
-                    is Result.Failure -> {
-                        val ex = result.getException()
-                        validationFlow.value = false
-                        //Toast.makeText(context, validationFlow.value.toString(), Toast.LENGTH_SHORT).show()
-                        _isValid.value = false
-                    }
-                    is Result.Success -> {
-                        val (data, _) = result
-                        data?.let {
-                            _userAuthState.value = it
-                            validationFlow.value = it.reply == "OK"
-                            //Toast.makeText(context, validationFlow.value.toString(), Toast.LENGTH_SHORT).show()
-                            _isValid.value = true
-                        }
-                    }
-                }
-            }
-        return _isValid.value
-    }
-}
-*/
-
 class UserAuthViewModel : ViewModel() {
 
     // MutableStateFlow to hold the current user authentication state

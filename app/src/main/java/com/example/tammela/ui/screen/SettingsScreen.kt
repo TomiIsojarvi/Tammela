@@ -155,14 +155,6 @@ fun SettingsScreen(
                     )
                 }
             },
-            /*supportingText = {
-                if (settingsViewModel.remoteNumber.isEmpty()) {
-                    Text(
-                        text = "Syötä GSM-numero",
-                        color = Color.Red
-                    )
-                }
-            }*/
         )
         TextField(
             modifier = modifier
@@ -187,14 +179,6 @@ fun SettingsScreen(
                     )
                 }
             },
-            /*supportingText = {
-                if (settingsViewModel.heatPumpNumber.isEmpty()) {
-                    Text(
-                        text = "Syötä GSM-numero",
-                        color = Color.Red
-                    )
-                }
-            }*/
         )
         Button(
             //enabled = settingsViewModel.username.isNotEmpty(),

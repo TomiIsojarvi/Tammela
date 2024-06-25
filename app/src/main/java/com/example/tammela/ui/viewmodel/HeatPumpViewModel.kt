@@ -96,6 +96,16 @@ class HeatPumpViewModel : ViewModel() {
         refresRemoteData()
     }
 
+    fun refreshHeatPumpData() {
+        viewModelScope.launch {
+            getHeatPumpCommand()
+        }
+    }
+
+    fun clearHeatPumpData() {
+        _history.value = emptyArray()
+    }
+
     fun setDevice(newDevice: String) {
         _device.value = newDevice
         refresRemoteData()

@@ -34,7 +34,10 @@ fun SensorScreen(
     ) {
         Column (modifier.fillMaxSize()){
             Button(
-                onClick = { viewModel.refreshSensorData() },
+                onClick = {
+                    viewModel.clearSensorData()
+                    viewModel.refreshSensorData()
+                          },
                 modifier = Modifier
                     .align(alignment = Alignment.End)
                     .padding(10.dp),

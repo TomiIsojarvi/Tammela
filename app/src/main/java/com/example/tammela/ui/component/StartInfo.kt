@@ -21,12 +21,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.tammela.data.model.CommandHistory
 import com.example.tammela.ui.viewmodel.HeatPumpViewModel
 import com.example.tammela.ui.viewmodel.RemoteViewModel
 import com.example.tammela.ui.viewmodel.SensorViewModel
@@ -78,11 +82,17 @@ fun StartInfo(
     val indoorSensor = sensors.firstOrNull { it.name == "Olohuone" }
     val outdoorSensor = sensors.firstOrNull { it.name == "Ulkona" }
 
+
     Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Button(
             onClick = {
+                sensorViewModel.clearSensorData()
+                remoteViewModel.clearRemoteData()
+                heatPumpViewModel.clearHeatPumpData()
+
                 sensorViewModel.refreshSensorData()
                 remoteViewModel.refresRemoteData()
+                heatPumpViewModel.refreshHeatPumpData()
                       },
             modifier = Modifier
                 .align(alignment = Alignment.End)
@@ -118,6 +128,7 @@ fun StartInfo(
             )
             // Display RemoteHistory information safely
             val commandHistory = remoteHistoryState
+
             Row (modifier.padding(10.dp))
             {
                 if (commandHistory != null && commandHistory.isNotEmpty()) {

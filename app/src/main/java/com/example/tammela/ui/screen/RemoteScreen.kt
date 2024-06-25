@@ -252,7 +252,10 @@ fun RemoteScreen(
                             == PackageManager.PERMISSION_GRANTED
                         ) {
                             sendSms(context, settingsViewModel, textCommand)
-                            remoteViewModel.sendRemoteData(settingsViewModel.username, textCommand)
+
+
+                            if (textCommand != "TILANNE")
+                                remoteViewModel.sendRemoteData(settingsViewModel.username, textCommand)
                         } else {
                             requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                         }
@@ -292,3 +295,6 @@ suspend fun sendSms(context: Context, settingsViewModel: SettingsViewModel, mess
         ).show()
     }
 }
+
+
+

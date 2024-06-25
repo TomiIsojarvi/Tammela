@@ -354,7 +354,9 @@ fun HeatPumpScreen(
                             == PackageManager.PERMISSION_GRANTED
                         ) {
                             sendHeatPumpSms(context, settingsViewModel, textCommand)
-                            heatPumpViewModel.sendHeatPumpData(settingsViewModel.username, textCommand)
+
+                            if (textCommand != "TEMP")
+                                heatPumpViewModel.sendHeatPumpData(settingsViewModel.username, textCommand)
                         } else {
                             requestPermissionLauncher.launch(Manifest.permission.SEND_SMS)
                         }
