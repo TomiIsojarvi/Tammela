@@ -58,6 +58,37 @@ class HeatPumpViewModel : ViewModel() {
         }
     }
 
+    fun setHeatPumpData() {
+        val userValue = _user.value
+        val amountValue = _amount.value
+        val deviceValue = _device.value
+        val url =
+            "https://www.isoseppo.fi/eTammela/api/system/get_command_history.php?user=$userValue&system=Tammela&device=$deviceValue&amount=$amountValue"
+        val header = emptyMap<String, String>()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            Fuel.get(url)
+                .header(header)
+                .responseObject(CommandStatus.Deserializer()) { _, _, result ->
+                    when (result) {
+                        is Result.Failure -> {
+                            val ex = result.getException()
+                            // Handle the error appropriately
+                            println("Error fetching status: ${ex.message}")
+                        }
+
+                        is Result.Success -> {
+                            val (data, _) = result
+                            data?.let {
+                                _status.value = it
+                                _history.value = CommandHistory.Deserializer().deserialize(it.extra)
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
     fun refresRemoteData() {
         viewModelScope.launch {
             getHeatPumpCommand()

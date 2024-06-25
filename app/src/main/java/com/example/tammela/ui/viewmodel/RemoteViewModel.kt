@@ -57,6 +57,32 @@ class RemoteViewModel : ViewModel() {
         }
     }
 
+    fun sendRemoteData( user: String, command: String) {
+        val url = "https://www.isoseppo.fi/eTammela/api/system/save_control_command.php?user=Seppo&system=Tammela&command=$command&device=0"
+        val header = emptyMap<String, String>()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            Fuel.get(url)
+                .header(header)
+                .responseObject(CommandStatus.Deserializer()) { _, _, result ->
+                    when (result) {
+                        is Result.Failure -> {
+                            val ex = result.getException()
+                            // Handle the error appropriately
+                            println("Error fetching status: ${ex.message}")
+                        }
+                        is Result.Success -> {
+                            val (data, _) = result
+                            data?.let {
+                                _status.value = it
+                                _history.value = CommandHistory.Deserializer().deserialize(it.extra)
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
     fun refresRemoteData() {
         viewModelScope.launch {
             getRemoteCommand()

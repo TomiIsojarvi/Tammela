@@ -9,7 +9,7 @@ data class CommandHistory(
     val time: String,
     val user: String,
     val state: String,
-    val device: String
+    val device: Int,
 ) {
     class Deserializer : ResponseDeserializable<Array<CommandHistory>> {
         override fun deserialize(content: String): Array<CommandHistory>? {
