@@ -31,15 +31,10 @@ import com.example.tammela.ui.screen.SensorScreen
 import com.example.tammela.ui.screen.SettingsScreen
 import com.example.tammela.ui.screen.StartScreen
 import com.example.tammela.ui.viewmodel.SettingsViewModel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import android.content.Context
-import androidx.compose.foundation.layout.Box
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.ui.Alignment
-import com.example.tammela.ui.screen.LoginScreen
-import kotlinx.coroutines.delay
+import com.example.tammela.ui.screen.ShoppingListScreen
+
 
 //-----------------------------------------------------------------------------
 // enum values that represent the screens in the app
@@ -161,7 +156,7 @@ fun TammelaApp(
 
             // Shopping List Screen
             composable(route = AppScreen.ShoppingList.name) {
-                //ShoppingListScreen()
+                ShoppingListScreen(modifier)
             }
 
             // Settings Screen
