@@ -156,7 +156,7 @@ fun TammelaApp(
 
             // Shopping List Screen
             composable(route = AppScreen.ShoppingList.name) {
-                ShoppingListScreen(modifier)
+                ShoppingListScreen(LocalContext.current, modifier)
             }
 
             // Settings Screen

@@ -257,7 +257,8 @@ fun RemoteScreen(
                                 if (remoteViewModel.sendRemoteData(
                                     settingsViewModel.username,
                                     textCommand
-                                ) == true) {
+                                )
+                                ) {
                                     remoteViewModel.refresRemoteData()
                                 }
                             }
