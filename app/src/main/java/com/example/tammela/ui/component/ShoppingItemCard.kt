@@ -19,12 +19,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.data.model.Sensor
 import com.example.tammela.data.model.ShoppingItem
+import com.example.tammela.ui.viewmodel.SettingsViewModel
+import com.example.tammela.ui.viewmodel.ShoppingListViewModel
 
 @Composable
 fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
@@ -36,6 +43,10 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
         tonalElevation = 2.dp,
         shadowElevation = 10.dp
     ) {
+        val viewModel: ShoppingListViewModel = viewModel()
+        var showDeleteItemDialog by remember { mutableStateOf(false) }
+        val settingsViewModel: SettingsViewModel = viewModel()
+
         Column (modifier = Modifier.fillMaxWidth())
         {
             Row (
@@ -56,9 +67,10 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
                      )
                 }
                 IconButton(
-                    modifier = Modifier.height(20.dp).width(40.dp),
-                    //enabled = buttonData.enabled,
-                    onClick = {},
+                    modifier = Modifier
+                        .height(20.dp)
+                        .width(40.dp),
+                    onClick = { },
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Check,
@@ -66,23 +78,26 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
                     )
                 }
                 IconButton(
-                    modifier = Modifier.height(20.dp).width(40.dp),
-                    //enabled = buttonData.enabled,
+                    modifier = Modifier
+                        .height(20.dp)
+                        .width(40.dp),
                     onClick = {},
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
-                        contentDescription = "Check the product"
+                        contentDescription = "Edit the product"
                     )
                 }
                 IconButton(
-                    modifier = Modifier.height(20.dp).width(40.dp),
+                    modifier = Modifier
+                        .height(20.dp)
+                        .width(40.dp),
                     //enabled = buttonData.enabled,
-                    onClick = {},
+                    onClick = { showDeleteItemDialog = true },
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Close,
-                        contentDescription = "Check the product"
+                        contentDescription = "Delete the product"
                     )
                 }
             }
@@ -102,6 +117,20 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
             {
 
             }
+        }
+
+        if (showDeleteItemDialog) {
+            DeleteItemDialog(
+                onDismissRequest = {
+                    showDeleteItemDialog = false
+                    //Toast.makeText(context, "Tuotetta ei lisätty", Toast.LENGTH_SHORT).show()
+                },
+                onConfirmation = {
+                    viewModel.deleteItemFromShoppingList(settingsViewModel.username, item.rowId)
+                    showDeleteItemDialog = false
+                },
+                item =item.item
+            )
         }
     }
 }
