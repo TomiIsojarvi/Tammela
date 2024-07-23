@@ -91,7 +91,6 @@ fun ShoppingListScreen(
         AddItemDialog(
             onDismissRequest = {
                 showAddItemDialog = false
-                //Toast.makeText(context, "Tuotetta ei lisätty", Toast.LENGTH_SHORT).show()
             },
             onConfirmation = { newItem ->
                 viewModel.addItemToShoppingList(settingsViewModel.username, newItem)

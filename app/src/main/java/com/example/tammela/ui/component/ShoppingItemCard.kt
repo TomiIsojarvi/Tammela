@@ -45,6 +45,7 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
     ) {
         val viewModel: ShoppingListViewModel = viewModel()
         var showDeleteItemDialog by remember { mutableStateOf(false) }
+        var showEditItemDialog by remember { mutableStateOf( false ) }
         val settingsViewModel: SettingsViewModel = viewModel()
 
         Column (modifier = Modifier.fillMaxWidth())
@@ -81,7 +82,7 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .height(20.dp)
                         .width(40.dp),
-                    onClick = {},
+                    onClick = { showEditItemDialog = true },
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Edit,
@@ -130,6 +131,20 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
                     showDeleteItemDialog = false
                 },
                 item =item.item
+            )
+        }
+
+        if (showEditItemDialog) {
+            EditItemDialog(
+                onDismissRequest = {
+                    showEditItemDialog = false
+                    //Toast.makeText(context, "Tuotetta ei lisätty", Toast.LENGTH_SHORT).show()
+                },
+                onConfirmation = { editedItem ->
+                    viewModel.editItemFromShoppingList(settingsViewModel.username, item.rowId, itemDesc = editedItem)
+                    showEditItemDialog = false
+                },
+                oldItem = item.item
             )
         }
     }

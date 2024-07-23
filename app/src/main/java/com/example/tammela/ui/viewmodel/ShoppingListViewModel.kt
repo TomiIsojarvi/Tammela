@@ -47,6 +47,32 @@ class ShoppingListViewModel : ViewModel() {
         }
     }
 
+    fun editItemFromShoppingList(user: String, id: Int, itemDesc: String) {
+        val url = "https://www.isoseppo.fi/eTammela/api/shoppingList/shoppingItem.php?user=$user&desc=$itemDesc&ope=edit&id=$id"
+        val header = emptyMap<String, String>()
+
+        viewModelScope.launch(Dispatchers.IO) {
+            Fuel.get(url)
+                .header(header)
+                .responseObject(ShoppingListStatus.Deserializer()) { _, _, result ->
+                    when (result) {
+                        is Result.Failure -> {
+                            val ex = result.getException()
+                            // Handle the error appropriately
+                            println("Error fetching status: ${ex.message}")
+                        }
+                        is Result.Success -> {
+                            val (data, _) = result
+                            data?.let {
+                                _status.value = it
+                                _shoppingList.value = ShoppingItem.Deserializer().deserialize(it.reply) ?: emptyArray()
+                            }
+                        }
+                    }
+                }
+        }
+    }
+
     fun addItemToShoppingList(user : String, itemDesc: String) {
         val url = "https://www.isoseppo.fi/eTammela/api/shoppingList/shoppingItem.php?user=$user&desc=$itemDesc&ope=add"
         val header = emptyMap<String, String>()
