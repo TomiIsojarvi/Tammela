@@ -12,7 +12,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.tammela.ui.viewmodel.SensorViewModel
 import com.example.tammela.ui.viewmodel.ShoppingListViewModel
 
 @Composable

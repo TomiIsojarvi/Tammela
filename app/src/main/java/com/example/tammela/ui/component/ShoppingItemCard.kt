@@ -124,7 +124,6 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
             DeleteItemDialog(
                 onDismissRequest = {
                     showDeleteItemDialog = false
-                    //Toast.makeText(context, "Tuotetta ei lisätty", Toast.LENGTH_SHORT).show()
                 },
                 onConfirmation = {
                     viewModel.deleteItemFromShoppingList(settingsViewModel.username, item.rowId)
@@ -138,7 +137,6 @@ fun ShoppingItemCard(item: ShoppingItem, modifier: Modifier = Modifier) {
             EditItemDialog(
                 onDismissRequest = {
                     showEditItemDialog = false
-                    //Toast.makeText(context, "Tuotetta ei lisätty", Toast.LENGTH_SHORT).show()
                 },
                 onConfirmation = { editedItem ->
                     viewModel.editItemFromShoppingList(settingsViewModel.username, item.rowId, itemDesc = editedItem)
