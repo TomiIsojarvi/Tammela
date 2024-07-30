@@ -30,124 +30,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tammela.data.model.ShoppingItem
 import com.example.tammela.ui.viewmodel.SettingsViewModel
 import com.example.tammela.ui.viewmodel.ShoppingListViewModel
-
-/*
-@Composable
-fun ShoppingItemCard(
-    item: ShoppingItem,
-    modifier: Modifier = Modifier,
-    onSelection: (Boolean) -> Unit
-) {
-    Surface(
-        modifier = modifier.padding(10.dp),
-        color = MaterialTheme.colorScheme.background,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
-        shape = RoundedCornerShape(12.dp),
-        tonalElevation = 2.dp,
-        shadowElevation = 10.dp
-    ) {
-        val viewModel: ShoppingListViewModel = viewModel()
-        var showDeleteItemDialog by remember { mutableStateOf( false ) }
-        var showEditItemDialog by remember { mutableStateOf( false ) }
-        val settingsViewModel: SettingsViewModel = viewModel()
-
-        Column (modifier = Modifier.fillMaxWidth())
-        {
-            Row (
-                modifier = Modifier.padding(10.dp)
-            )
-            {
-                Row(
-                    modifier =  Modifier.weight(1f),
-                )
-                {
-                    Text(
-                        fontWeight = FontWeight(700),
-                        text = item.user
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 8.dp),
-                        text = item.createDate
-                    )
-                }
-                */
-/*IconButton(
-                    modifier = Modifier
-                        .height(20.dp)
-                        .width(40.dp),
-                    onClick = { },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Check,
-                        contentDescription = "Check the product"
-                    )
-                }*//*
-
-                IconButton(
-                    modifier = Modifier
-                        .height(20.dp)
-                        .width(40.dp),
-                    onClick = { showEditItemDialog = true },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Edit,
-                        contentDescription = "Edit the product"
-                    )
-                }
-                */
-/*IconButton(
-                    modifier = Modifier
-                        .height(20.dp)
-                        .width(40.dp),
-                    //enabled = buttonData.enabled,
-                    onClick = { showDeleteItemDialog = true },
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Close,
-                        contentDescription = "Delete the product"
-                    )
-                }*//*
-
-            }
-            Row (
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp, bottom = 10.dp),
-            )
-            {
-                Text(
-                    modifier =  Modifier.weight(1f),
-                    //fontWeight = FontWeight(700),
-                    text = item.item
-                )
-            }
-        }
-
-        if (showDeleteItemDialog) {
-            DeleteItemDialog(
-                onDismissRequest = {
-                    showDeleteItemDialog = false
-                },
-                onConfirmation = {
-                    viewModel.deleteItemFromShoppingList(settingsViewModel.username, item.rowId)
-                    showDeleteItemDialog = false
-                },
-                item =item.item
-            )
-        }
-
-        if (showEditItemDialog) {
-            EditItemDialog(
-                onDismissRequest = {
-                    showEditItemDialog = false
-                },
-                onConfirmation = { editedItem ->
-                    viewModel.editItemFromShoppingList(settingsViewModel.username, item.rowId, itemDesc = editedItem)
-                    showEditItemDialog = false
-                },
-                oldItem = item.item
-            )
-        }
-    }
-}*/
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.format
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun ShoppingItemCard(
@@ -159,17 +46,25 @@ fun ShoppingItemCard(
     isSelected: Boolean
 ) {
     var backgroundColor: Color = MaterialTheme.colorScheme.background
-    var borderColor: Color = MaterialTheme.colorScheme.secondary
+
+    // Date formatting
+    val originalFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    val targetFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    val formattedDate = try {
+        val date = originalFormat.parse(item.createDate)
+        targetFormat.format(date)
+    } catch (e: Exception) {
+        item.createDate // In case of a parsing error, use the original date string
+    }
 
     if (isSelected == true) {
-        backgroundColor = Color.Green.copy(alpha = 0.2f)
-        borderColor = Color.Green
+        backgroundColor = Color(0xFF90EE90)
     }
 
     Surface(
         modifier = modifier.padding(10.dp),
         color = backgroundColor,
-        border = BorderStroke(1.dp, borderColor),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
         shape = RoundedCornerShape(12.dp),
         tonalElevation = 2.dp,
         shadowElevation = 10.dp,
@@ -191,7 +86,7 @@ fun ShoppingItemCard(
                     )
                     Text(
                         modifier = Modifier.padding(start = 8.dp),
-                        text = item.createDate
+                        text = formattedDate
                     )
                 }
                 IconButton(
