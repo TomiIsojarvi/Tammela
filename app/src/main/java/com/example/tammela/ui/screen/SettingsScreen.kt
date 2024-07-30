@@ -48,6 +48,8 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.datastore.preferences.preferencesDataStore
@@ -81,7 +83,6 @@ fun SettingsScreen(
     modifier: Modifier = Modifier,
 ) {
     val settingsViewModel: SettingsViewModel = viewModel()
-    val userAuthViewModel: UserAuthViewModel = viewModel()
     val coroutineScope = rememberCoroutineScope()
 
     // Load initial data when the composable is first composed
@@ -106,6 +107,10 @@ fun SettingsScreen(
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Color.Transparent,
                 unfocusedContainerColor = Color.Transparent
+            ),
+            keyboardOptions = KeyboardOptions(
+                capitalization = KeyboardCapitalization.Words,
+                imeAction = ImeAction.Done
             ),
             value = settingsViewModel.username,
             onValueChange = { settingsViewModel.updateUsername(it) },

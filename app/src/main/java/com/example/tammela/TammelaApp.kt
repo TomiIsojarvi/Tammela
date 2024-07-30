@@ -74,8 +74,8 @@ fun TammelaAppBar(
 
 @Composable
 fun TammelaApp(
-    context: Context = LocalContext.current,
     modifier: Modifier = Modifier,
+    context: Context = LocalContext.current,
     navController: NavHostController = rememberNavController()
 ) {
     // Get current back stack entry
@@ -89,10 +89,6 @@ fun TammelaApp(
     var showLogin by remember { mutableStateOf(true) }
     val coroutineScope = rememberCoroutineScope()
     val settingsViewModel: SettingsViewModel = viewModel()
-
-    fun onChangeScreen(screen: AppScreen) {
-        navController.navigate(screen.name)
-    }
 
     LaunchedEffect(Unit) {
         coroutineScope.launch {
@@ -157,6 +153,8 @@ fun TammelaApp(
             // Shopping List Screen
             composable(route = AppScreen.ShoppingList.name) {
                 ShoppingListScreen(LocalContext.current, modifier)
+                //WellnessScreen()
+                //SelectableLazyListSample()
             }
 
             // Settings Screen
