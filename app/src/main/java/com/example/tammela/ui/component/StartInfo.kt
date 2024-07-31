@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -111,6 +112,7 @@ fun StartInfo(
                 Text("Päivitä")
 
         }
+        Spacer(modifier = Modifier.height(16.dp))
         Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly) {
             if (indoorSensor != null && outdoorSensor != null) {
                 TempTile(title = "Sisällä", value = indoorSensor.temperature)
@@ -119,6 +121,7 @@ fun StartInfo(
                 CircularProgressIndicator()
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
         Column (modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             //-------------------------------------------------------------------------------------
             Text(

@@ -204,6 +204,7 @@ fun RemoteScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxHeight()
+                        .padding(bottom = 32.dp)
 
                 ) {
                     items(remoteHistory) { item ->

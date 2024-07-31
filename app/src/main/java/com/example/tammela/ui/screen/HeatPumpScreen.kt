@@ -306,7 +306,7 @@ fun HeatPumpScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxHeight()
-
+                        .padding(bottom = 32.dp)
                 ) {
                     items(remoteHistory) { item ->
                         var localDateTime = LocalDateTime.parse(

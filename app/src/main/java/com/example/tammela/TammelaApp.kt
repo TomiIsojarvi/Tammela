@@ -33,6 +33,7 @@ import com.example.tammela.ui.screen.StartScreen
 import com.example.tammela.ui.viewmodel.SettingsViewModel
 import kotlinx.coroutines.launch
 import android.content.Context
+import androidx.compose.material3.BottomAppBar
 import com.example.tammela.ui.screen.ShoppingListScreen
 
 
@@ -113,7 +114,6 @@ fun TammelaApp(
                 navigateUp = { navController.navigateUp() }
             )
         },
-        bottomBar = {}
     ) { innerPadding ->
         NavHost(
             navController = navController,
