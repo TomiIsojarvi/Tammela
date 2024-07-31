@@ -17,8 +17,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun SensorCardList(
+    modifier: Modifier = Modifier,
     viewModel: SensorViewModel = viewModel(),
-    modifier: Modifier = Modifier
 ) {
     val sensors by viewModel.sensors.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()

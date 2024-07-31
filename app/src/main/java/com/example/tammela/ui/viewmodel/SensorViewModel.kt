@@ -29,7 +29,7 @@ class SensorViewModel : ViewModel() {
                     when (result) {
                         is Result.Failure -> {
                             val ex = result.getException()
-                            //_error.value = ex.response.statusCode.toString()
+                            println(ex)
                         }
                         is Result.Success -> {
                             val (data, _) = result

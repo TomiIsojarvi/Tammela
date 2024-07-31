@@ -1,7 +1,6 @@
 package com.example.tammela.ui.screen
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,9 +20,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -152,7 +149,11 @@ fun ShoppingListScreen(
                     currentItemBeingEdited = null
                 },
                 onConfirmation = { editedItem ->
-                    viewModel.editItemFromShoppingList(settingsViewModel.username, item.rowId, itemDesc = editedItem)
+                    viewModel.editItemFromShoppingList(
+                        settingsViewModel.username,
+                        item.rowId,
+                        itemDesc = editedItem
+                    )
                     showEditItemDialog = false
                     currentItemBeingEdited = null
                 },

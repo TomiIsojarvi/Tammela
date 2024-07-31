@@ -1,13 +1,6 @@
 package com.example.tammela.ui.viewmodel
 
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshots.SnapshotStateList
-import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tammela.data.model.ShoppingItem
@@ -36,7 +29,7 @@ class ShoppingListViewModel : ViewModel() {
         }
     }
 
-    fun deleteItem(user: String, id: Int) {
+    private fun deleteItem(user: String, id: Int) {
         val url = "https://www.isoseppo.fi/eTammela/api/shoppingList/shoppingItem.php?user=$user&ope=delete&id=$id"
         val header = emptyMap<String, String>()
 

@@ -54,7 +54,7 @@ fun SensorScreen(
                 Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
                 Text("Päivitä")
             }
-            SensorCardList(viewModel, modifier)
+            SensorCardList(modifier, viewModel)
         }
     }
 }

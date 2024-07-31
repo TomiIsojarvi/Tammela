@@ -56,8 +56,6 @@ fun HeatPumpScreen(
 ) {
     val heatPumpViewModel: HeatPumpViewModel = viewModel()
 
-    val radioOptions = listOf("Kaikki", "Omat")
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(radioOptions[0]) }
     val heatPumpHistoryState by heatPumpViewModel.history.collectAsState(initial = emptyArray())
 
     val settingsViewModel: SettingsViewModel = viewModel()
