@@ -112,7 +112,8 @@ fun TammelaApp(
                 canNavigateBack = navController.previousBackStackEntry != null,
                 navigateUp = { navController.navigateUp() }
             )
-        }
+        },
+        bottomBar = {}
     ) { innerPadding ->
         NavHost(
             navController = navController,

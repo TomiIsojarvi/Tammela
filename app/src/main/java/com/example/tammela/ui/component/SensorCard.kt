@@ -21,7 +21,7 @@ import com.example.tammela.data.model.Sensor
 fun SensorCard(sensor: Sensor, modifier: Modifier = Modifier) {
     Surface(
         modifier = modifier.padding(10.dp),
-        color = MaterialTheme.colorScheme.background,
+        color = Color(0xFFE5E5E5)/*MaterialTheme.colorScheme.background*/,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
         shape = RoundedCornerShape(12.dp),
         tonalElevation = 2.dp,

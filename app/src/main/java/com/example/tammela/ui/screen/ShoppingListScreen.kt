@@ -43,91 +43,6 @@ import com.example.tammela.ui.viewmodel.SettingsViewModel
 import com.example.tammela.ui.viewmodel.ShoppingListViewModel
 import kotlinx.coroutines.launch
 
-/*
-@Composable
-fun ShoppingListScreen(
-    context: Context,
-    modifier: Modifier = Modifier
-) {
-    val viewModel: ShoppingListViewModel = viewModel()
-    val coroutineScope = rememberCoroutineScope()
-    val settingsViewModel: SettingsViewModel = viewModel()
-    var showAddItemDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            settingsViewModel.loadUserData(context)
-            viewModel.getShoppingList()
-        }
-    }
-
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(modifier.fillMaxSize()) {
-            Row {
-                Button(
-                    enabled = false,
-                    onClick = {
-                        //showAddItemDialog = true
-                    },
-                    modifier = Modifier
-                        //.align(alignment = Alignment.End)
-                        .padding(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Gray.copy(alpha = 0.2f),
-                        contentColor = Color.Black
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = "Delete",
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                    Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                    Text("Poista")
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                Button(
-                    onClick = {
-                        showAddItemDialog = true
-                    },
-                    modifier = Modifier
-                        //.align(alignment = Alignment.End)
-                        .padding(10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Gray.copy(alpha = 0.2f),
-                        contentColor = Color.Black
-                    )
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "Add",
-                        modifier = Modifier.size(ButtonDefaults.IconSize)
-                    )
-                    Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                    Text("Lisää")
-                }
-            }
-            ShoppingList(modifier, viewModel.shoppingList, {}, {})
-        }
-    }
-
-    if (showAddItemDialog) {
-        AddItemDialog(
-            onDismissRequest = {
-                showAddItemDialog = false
-            },
-            onConfirmation = { newItem ->
-                viewModel.addItemToShoppingList(settingsViewModel.username, newItem)
-                showAddItemDialog = false
-            },
-        )
-    }
-}
-*/
-
 @Composable
 fun ShoppingListScreen(
     context: Context,
@@ -163,7 +78,7 @@ fun ShoppingListScreen(
                     modifier = Modifier
                         .padding(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Gray.copy(alpha = 0.2f),
+                        containerColor = Color(0xFFE5E5E5),
                         contentColor = Color.Black
                     )
                 ) {
@@ -183,7 +98,7 @@ fun ShoppingListScreen(
                     modifier = Modifier
                         .padding(10.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Gray.copy(alpha = 0.2f),
+                        containerColor = Color(0xFFE5E5E5),
                         contentColor = Color.Black
                     )
                 ) {

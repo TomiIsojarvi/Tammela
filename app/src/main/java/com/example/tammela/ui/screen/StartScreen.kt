@@ -54,7 +54,7 @@ fun ButtonItem(buttonData: ButtonData) {
             modifier = Modifier
                 .padding(8.dp),
             shape = CircleShape,
-            color = Color.Gray.copy(alpha = 0.2f)
+            color = Color(0xFFE5E5E5)/*Color.Gray.copy(alpha = 0.2f)*/
         ) {
             IconButton(
                 enabled = buttonData.enabled,

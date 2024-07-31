@@ -194,7 +194,7 @@ fun SettingsScreen(
             //enabled = settingsViewModel.username.isNotEmpty(),
             modifier = modifier.padding(10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Gray.copy(alpha = 0.2f),
+                containerColor = Color(0xFFE5E5E5),
                 contentColor = Color.Black),
             onClick = {
                 coroutineScope.launch {

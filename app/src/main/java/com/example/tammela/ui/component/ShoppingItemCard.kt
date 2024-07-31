@@ -59,6 +59,8 @@ fun ShoppingItemCard(
 
     if (isSelected == true) {
         backgroundColor = Color(0xFF90EE90)
+    } else {
+        backgroundColor = Color(0xFFE5E5E5)
     }
 
     Surface(

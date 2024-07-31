@@ -17,7 +17,7 @@ fun CommandButton(
         onClick = onClick,
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.Gray.copy(alpha = 0.2f),
+            containerColor = Color(0xFFE5E5E5),
             contentColor = Color.Black
         )
     ) {
