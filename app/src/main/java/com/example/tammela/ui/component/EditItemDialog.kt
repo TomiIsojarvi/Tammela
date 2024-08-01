@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
@@ -48,7 +49,8 @@ fun EditItemDialog(
                         onValueChange = { text = it },
                         label = { Text("Tuote") },
                         keyboardOptions = KeyboardOptions(
-                            imeAction = ImeAction.Done
+                            capitalization = KeyboardCapitalization.Sentences,
+                            imeAction = ImeAction.Default
                         )
                     )
                 }
