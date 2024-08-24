@@ -20,7 +20,7 @@ Etusivu näyttää käyttäjälle viimeisimmät lämpötilat sekä tapahtumat.
 Quick Search is a simple search to show the latest data from one hour up to three months ago.
 
 ### Etäohjaus
-<img src="Docs/8.png" alt="Tooltip" style="width:200px;"/> /
+<img src="Docs/9.png" alt="Tooltip" style="width:200px;"/> /
 Advanced Search is used for more detailed search.
 
 ### ILP (Ilmalämpöpumppu)
