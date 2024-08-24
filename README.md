@@ -5,11 +5,9 @@
 <img src="Doc/3.png" alt="Tooltip" style="width:200px;"/>
 </p>
 
-CO2 Finland is a mobile application that shows CO2 emissions of electricity production and consumption from selected timeline in Finland.  
-CO2 Finland is programmed using Dart programming language and Flutter framework.  
-Fingrid Open Data service is used for data points. (https://data.fingrid.fi/en).  
-Syncfusion Flutter Charts is used for drawing charts.  
-This project is made by Tomi Isojärvi as a project assignment for Oulu University of Applied Sciences (OAMK).
+Tammela sovellus on Android-sovellus, jolla ohjataan ja seurataan Kiinteistöyhtymä Tammelan laitteistoja ja tarjotaan yhtymän käyttäjille helpottavia toimintoja.
+Tammela sovelluksen on tarjota Kiinteistöyhtymä Tammelan käyttäjille helpottavia toimintoja. Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestelmän ohjaus, sekä ostoslistaan lisääminen ja poistaminen.
+
 
 ## Käyttöohjeet
 ### Etusivu
