@@ -16,7 +16,7 @@ Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestel
 Etusivu näyttää käyttäjälle viimeisimmät lämpötilat sekä tapahtumat.
 
 ### Mittarit
-<img src="Doc/quick_search.png" alt="Tooltip" style="width:200px;"/>
+<img src="Docs/5.png" alt="Tooltip" style="width:200px;"/>
 Quick Search is a simple search to show the latest data from one hour up to three months ago.
 
 ### Etäohjaus
