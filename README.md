@@ -14,15 +14,16 @@ Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestel
 ### Etusivu
 <img src="Docs/1.png" align="left" alt="Start Screen" style="width:200px;"/>
 Etusivulta voidaan erilaisista napeista siirtyä toiseen toimintaan.
-#### Quick Search
+
+### Mittarit
 <img src="Doc/quick_search.png" alt="Tooltip" style="width:200px;"/>
 Quick Search is a simple search to show the latest data from one hour up to three months ago.
 
-#### Advanced Search
+### Etäohjaus
 <img src="Doc/advanced_search.png" alt="Tooltip" style="width:200px;"/> /
 Advanced Search is used for more detailed search.
 
-##### Start date and End date
+### ILP (Ilmalämpöpumppu)
 Select the start date and end date. Select whether you want the data to be shown starting from the start date or from the end date.
 
 ##### Average Filter  
