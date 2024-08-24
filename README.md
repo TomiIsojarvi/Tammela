@@ -6,6 +6,8 @@
 </p>
 
 Tammela sovellus on Android-sovellus, jolla ohjataan ja seurataan Kiinteistöyhtymä Tammelan laitteistoja ja tarjotaan yhtymän käyttäjille helpottavia toimintoja.
+Tammela sovelluksen on tarjota Kiinteistöyhtymä Tammelan käyttäjille helpottavia toimintoja. Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestelmän ohjaus, sekä ostoslistaan lisääminen ja poistaminen.
+
 
 ## Käyttöohjeet
 ### Etusivu
