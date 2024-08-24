@@ -10,15 +10,16 @@ Tammela sovelluksen on tarjota Kiinteistöyhtymä Tammelan käyttäjille helpott
 
 
 ## Käyttöohjeet
+
 ### Etusivu
 You can search data using either Quick Search or Advanced Search:
-<img src="Docs/1.png" alt="Start Screen" style="width:200px;"/>
+<img src="Docs/1.png" align="left" alt="Start Screen" style="width:200px;"/>
 #### Quick Search
 <img src="Doc/quick_search.png" alt="Tooltip" style="width:200px;"/>
 Quick Search is a simple search to show the latest data from one hour up to three months ago.
 
 #### Advanced Search
-<img src="Doc/advanced_search.png" alt="Tooltip" style="width:200px;"/>
+<img src="Doc/advanced_search.png" alt="Tooltip" style="width:200px;"/> /
 Advanced Search is used for more detailed search.
 
 ##### Start date and End date
