@@ -1,8 +1,9 @@
 # Tammela sovellus
 <p align="middle">
-<img src="Doc/1.png" alt="Search screen" style="width:200px;"/>
-<img src="Doc/2.png" alt="Graph" style="width:200px;"/>
-<img src="Doc/3.png" alt="Tooltip" style="width:200px;"/>
+<img src="Docs/1.png" alt="Search screen" style="width:200px;"/>
+<img src="Docs/2.png" alt="Graph" style="width:200px;"/>
+<img src="Docs/3.png" alt="Tooltip" style="width:200px;"/>
+<img src="Docs/4.png" alt="Tooltip" style="width:200px;"/>
 </p>
 
 Tammela sovellus on Android-sovellus, jolla ohjataan ja seurataan Kiinteistöyhtymä Tammelan laitteistoja ja tarjotaan yhtymän käyttäjille helpottavia toimintoja.
