@@ -24,6 +24,7 @@ Quick Search is a simple search to show the latest data from one hour up to thre
 Advanced Search is used for more detailed search.
 
 ### ILP (Ilmalämpöpumppu)
+<img src="Docs/3.png" alt="Tooltip" style="width:200px;"/> /
 Select the start date and end date. Select whether you want the data to be shown starting from the start date or from the end date.
 
 ### Ostoslista
