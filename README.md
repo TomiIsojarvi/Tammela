@@ -12,7 +12,6 @@ Tammela sovelluksen on tarjota Kiinteistöyhtymä Tammelan käyttäjille helpott
 ## Käyttöohjeet
 
 ### Etusivu
-You can search data using either Quick Search or Advanced Search:
 <img src="Docs/1.png" align="left" alt="Start Screen" style="width:200px;"/>
 #### Quick Search
 <img src="Doc/quick_search.png" alt="Tooltip" style="width:200px;"/>
