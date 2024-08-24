@@ -28,6 +28,7 @@ Advanced Search is used for more detailed search.
 Select the start date and end date. Select whether you want the data to be shown starting from the start date or from the end date.
 
 ### Ostoslista
+<img src="Docs/4.png" alt="Tooltip" style="width:200px;"/> /
 Used for averaging and filtering data by an hour, a day, or a month. Advanced Filter can be turned off by choosing `None`.
 
 ##### Time interval
