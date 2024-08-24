@@ -1,6 +1,5 @@
 # Tammela sovellus
 <p align="middle">
-<img src="Docs/1.png" alt="Search screen" style="width:200px;"/>
 <img src="Docs/5.png" alt="Graph" style="width:200px;"/>
 <img src="Docs/3.png" alt="Tooltip" style="width:200px;"/>
 <img src="Docs/4.png" alt="Tooltip" style="width:200px;"/>
@@ -13,6 +12,7 @@ Tammela sovelluksen on tarjota Kiinteistöyhtymä Tammelan käyttäjille helpott
 ## Käyttöohjeet
 ### Etusivu
 You can search data using either Quick Search or Advanced Search:
+<img src="Docs/1.png" alt="Start Screen" style="width:200px;"/>
 #### Quick Search
 <img src="Doc/quick_search.png" alt="Tooltip" style="width:200px;"/>
 Quick Search is a simple search to show the latest data from one hour up to three months ago.
