@@ -23,3 +23,4 @@ Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestel
 <img src="Docs/4.png" alt="Tooltip" style="width:200px;"/>
 
 ### Asetukset
+<img src="Docs/10.png" alt="Tooltip" style="width:200px;"/>
