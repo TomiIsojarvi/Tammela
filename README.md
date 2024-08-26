@@ -10,7 +10,7 @@ Näitä ovat mittauslaitteiden seuranta, ilmalämpöpumpun ja seurantajärjestel
 
 ### Etusivu
 <img src="Docs/1.png" align="left" alt="Start Screen" style="width:200px;"/>
-Etusivu näyttää käyttäjälle viimeisimmät lämpötilat sekä tapahtumat.
+Etusivu näyttää käyttäjälle viimeisimmät lämpötilat sekä tapahtumat. /
 
 ### Mittarit
 <img src="Docs/5.png" alt="Tooltip" style="width:200px;"/>
